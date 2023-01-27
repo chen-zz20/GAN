@@ -1,0 +1,17 @@
+name: GAN
+channels:
+  - pytorch
+  - conda-forge
+  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/linux-64/
+  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/linux-64/
+  - defaults
+dependencies:
+  - python=3.7.0
+  - pytorch
+  - torchvision
+  - tensorboard
+  - tensorboardX
+  - scipy=1.2.1
+  - numpy
+  - tqdm
+  - matplotlib
