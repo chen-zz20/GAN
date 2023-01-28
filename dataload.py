@@ -30,7 +30,7 @@ class MNIST_Dataset(Dataset):
         self._training_loader = DataLoader(
             self._training_data,
             batch_size=batch_size,
-            num_workers=10,
+            num_workers=2,
             shuffle=True,
             pin_memory=True
         )
@@ -38,7 +38,7 @@ class MNIST_Dataset(Dataset):
         self._validation_loader = DataLoader(
             self._validation_data,
             batch_size=batch_size,
-            num_workers=10,
+            num_workers=2,
             shuffle=False,
             pin_memory=True
         )
@@ -80,7 +80,7 @@ class CIFAR10_Dataset(Dataset):
         self._training_loader = DataLoader(
             self._training_data,
             batch_size=batch_size,
-            num_workers=10,
+            num_workers=2,
             shuffle=True,
             pin_memory=True
         )
@@ -88,7 +88,7 @@ class CIFAR10_Dataset(Dataset):
         self._validation_loader = DataLoader(
             self._validation_data,
             batch_size=batch_size,
-            num_workers=10,
+            num_workers=2,
             shuffle=False,
             pin_memory=True
         )
@@ -130,7 +130,7 @@ class CIFAR100_Dataset(Dataset):
         self._training_loader = DataLoader(
             self._training_data,
             batch_size=batch_size,
-            num_workers=10,
+            num_workers=2,
             shuffle=True,
             pin_memory=True
         )
@@ -138,7 +138,7 @@ class CIFAR100_Dataset(Dataset):
         self._validation_loader = DataLoader(
             self._validation_data,
             batch_size=batch_size,
-            num_workers=10,
+            num_workers=2,
             shuffle=False,
             pin_memory=True
         )

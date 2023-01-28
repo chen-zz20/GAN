@@ -10,6 +10,8 @@
     |—— data #数据集
     |—— train #保存的模型
     |—— log #tensorboard保存的文件地址
+    |—— pytorch_fid #对生成图片进行评分
+    |—— inception #pytorch_fid配置文件
     *.py #代码文件
     Makefile
     README.md
@@ -22,3 +24,11 @@
 conda env create -f environment.yml
 ```
 
+## 运行
+```
+python main.py --do_train --mode XXX # 训练
+python main.py --mode XXX #评分
+python main.py --interpolation #线性插值
+python main.py --collapse #模式崩溃
+make show #tensorboard展示
+```

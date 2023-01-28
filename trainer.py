@@ -33,7 +33,7 @@ class Trainer(object):
         self.netG.load(train_dir, "")
         self.netD.load(train_dir, "")
     
-    def train_step(self, real_imgs:Tensor, fake_imgs:Tensor, BCE_criterion:Module) -> tuple[Tensor, Tensor, Tensor, Tensor, Tensor]:
+    def train_step(self, real_imgs:Tensor, fake_imgs:Tensor, BCE_criterion:Module):
         """DO NOT FORGET TO ZERO_GRAD netD and netG
         *   Returns:
             *   loss of netD (scalar)
@@ -85,10 +85,10 @@ class Trainer(object):
         return loss_D_real + loss_D_fake, loss_G, D_real, D_fake_1, D_fake_2
     
     def train(self, num_epochs:int, saving_epochs:int) -> None:
-        fixed_noise = torch.randn(50, self.netG.latent_dim, 1, 1, device=self.device)
+        fixed_noise = torch.randn(64, self.netG.latent_dim, 1, 1, device=self.device)
         cirterion = nn.BCELoss()
         training_loader = self.dataset.training_loader
-        for epoch in tqdm(range(1, 1 + num_epochs), desc="Training"):
+        for epoch in tqdm(range(1, 1 + num_epochs), desc="Training", position=0):
             self.netD.train()
             self.netG.train()
             loss_D, loss_G, D_real, D_fake_1, D_fake_2 = 0.0, 0.0, 0.0, 0.0, 0.0

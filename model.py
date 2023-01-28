@@ -3,24 +3,6 @@ import torch.nn as nn
 from torch import Tensor
 import os
 
-def weights_init(m:nn.Module) -> None:
-    classname = m.__class__.__name__
-    if classname.find('Conv') != -1:
-        nn.init.normal_(m.weight, 0.0, 0.02)
-    elif classname.find('BatchNorm') != -1:
-        nn.init.normal_(m.weight, 1.0, 0.02)
-        nn.init.zeros_(m.bias)
-
-def get_generator(latent_dim:int, hidden_dim:int, mode:str="MNIST", device:torch.device=None) -> nn.Module:
-    model = Generator(latent_dim, hidden_dim, mode, device).to(device)
-    model.apply(weights_init)
-    return model
-
-def get_discriminator(hidden_dim:int, mode:str="MNIST", device:torch.device=None) -> nn.Module:
-    model = Discriminator(hidden_dim, mode, device).to(device)
-    model.apply(weights_init)
-    return model
-
 class Generator(nn.Module):
     def __init__(self, latent_dim:int, hidden_dim:int, mode:str="MNIST", device:torch.device=None) -> None:
         super().__init__()
@@ -73,10 +55,11 @@ class Generator(nn.Module):
         try:
             if os.path.exists(os.path.join(train_dir, 'generator.pth')):
                 path = os.path.join(train_dir, 'generator.pth')
-            else:
+            elif os.path.exists(os.path.join(train_dir, notes, 'generator.pth')):
                 path = os.path.join(train_dir, notes, 'generator.pth')
+            else:
+                return None
         except:
-            print("model load error!")
             return None
         self.load_state_dict(torch.load(path))
         return os.path.split(path)[0]
@@ -130,10 +113,11 @@ class Discriminator(nn.Module):
         try:
             if os.path.exists(os.path.join(train_dir, 'discriminator.pth')):
                 path = os.path.join(train_dir, 'discriminator.pth')
-            else:
+            elif os.path.exists(os.path.join(train_dir, notes, 'discriminator.pth')):
                 path = os.path.join(train_dir, notes, 'discriminator.pth')
+            else:
+                return None
         except:
-            print("model load error!")
             return None
         self.load_state_dict(torch.load(path))
         return os.path.split(path)[0]
@@ -144,3 +128,22 @@ class Discriminator(nn.Module):
         path = os.path.join(path, 'discriminator.pth')
         torch.save(self.state_dict(), path)
         return os.path.split(path)[0]
+    
+
+def weights_init(m:nn.Module) -> None:
+    classname = m.__class__.__name__
+    if classname.find('Conv') != -1:
+        nn.init.normal_(m.weight, 0.0, 0.02)
+    elif classname.find('BatchNorm') != -1:
+        nn.init.normal_(m.weight, 1.0, 0.02)
+        nn.init.zeros_(m.bias)
+
+def get_generator(latent_dim:int, hidden_dim:int, mode:str="MNIST", device:torch.device=None) -> Generator:
+    model = Generator(latent_dim, hidden_dim, mode, device).to(device)
+    model.apply(weights_init)
+    return model
+
+def get_discriminator(hidden_dim:int, mode:str="MNIST", device:torch.device=None) -> Discriminator:
+    model = Discriminator(hidden_dim, mode, device).to(device)
+    model.apply(weights_init)
+    return model
