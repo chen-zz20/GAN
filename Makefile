@@ -22,7 +22,7 @@ show:
 	tensorboard --logdir="./log"
 
 clean:
-	rm ./log/**/events.*
+	rm -rf ./log/**/
 
 train-clean:
 	rm -rf ./train/**/
